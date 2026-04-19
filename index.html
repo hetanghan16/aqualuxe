@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AquaLuxe — Water, Beyond Reason.</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    @keyframes floatBottle { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes spinRing { from{transform:translate(-50%,-50%) rotate(0deg)} to{transform:translate(-50%,-50%) rotate(360deg)} }
+    @keyframes spinRing2 { from{transform:translate(-50%,-50%) rotate(0deg)} to{transform:translate(-50%,-50%) rotate(-360deg)} }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:#080810;
+      color:#e8e3d8;
+      font-family: Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 60px;
+      border-bottom:0.5px solid #1e1e2a;
+      background:#080810;
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .nav-links { display:flex; gap:32px; }
+    .nav-link {
+      font-size:9px; letter-spacing:3px; color:#3a3830;
+      text-transform:uppercase; cursor:pointer;
+      transition:color .3s; font-family:sans-serif;
+      text-decoration:none;
+    }
+    .nav-link:hover { color:#e8e3d8; }
+    .nav-brand { font-size:10px; letter-spacing:8px; color:#7a6e5f; text-transform:uppercase; }
+    .nav-cart {
+      font-size:9px; letter-spacing:3px; color:#b8a98a;
+      text-transform:uppercase; cursor:pointer; font-family:sans-serif;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      padding:80px 80px;
+      position:relative;
+      overflow:hidden;
+      gap:40px;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse at 60% 50%, #0d0d20 0%, #080810 65%);
+    }
+    .ring {
+      position:absolute;
+      border-radius:50%;
+      top:50%; left:55%;
+    }
+    .r1 {
+      width:540px; height:540px;
+      border:0.5px solid #1a1a28;
+      animation:spinRing 55s linear infinite;
+    }
+    .r2 {
+      width:780px; height:780px;
+      border:0.5px solid #111118;
+      animation:spinRing2 85s linear infinite;
+    }
+    .hero-left { position:relative; z-index:2; }
+    .hero-eyebrow {
+      font-size:9px; letter-spacing:6px; color:#3a3430;
+      text-transform:uppercase; font-family:sans-serif;
+      margin-bottom:32px;
+      animation:fadeIn 1s ease .2s both;
+    }
+    .hero-title {
+      font-size:clamp(52px, 7vw, 88px);
+      line-height:1.0; font-weight:400;
+      animation:fadeUp 1s ease .4s both;
+    }
+    .hero-title em { font-style:italic; color:#b8a98a; }
+    .hero-title strong { font-weight:700; }
+    .hero-sub {
+      font-size:10px; letter-spacing:5px; color:#3a3430;
+      text-transform:uppercase; font-family:sans-serif;
+      margin:28px 0 44px;
+      animation:fadeIn 1s ease .8s both;
+    }
+    .hero-cta {
+      display:inline-block;
+      border:0.5px solid #4a4438; color:#e8e3d8;
+      padding:16px 48px; font-size:9px;
+      letter-spacing:5px; text-transform:uppercase;
+      cursor:pointer; background:transparent;
+      transition:all .4s; font-family:sans-serif;
+      animation:fadeIn 1s ease 1s both;
+      text-decoration:none;
+    }
+    .hero-cta:hover { background:#b8a98a; border-color:#b8a98a; color:#080810; }
+    .hero-right {
+      position:relative; z-index:2;
+      display:flex; justify-content:center;
+      animation:fadeIn 1.2s ease .6s both;
+    }
+    .bottle-float {
+      animation:floatBottle 5s ease-in-out infinite;
+      cursor:pointer;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap { overflow:hidden; background:#b8a98a; padding:12px 0; }
+    .ticker { display:flex; animation:marquee 22s linear infinite; white-space:nowrap; }
+    .ticker-item {
+      font-size:9px; letter-spacing:5px;
+      text-transform:uppercase; color:#080810;
+      padding:0 44px; font-family:sans-serif;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding:100px 80px; }
+    .sec-dark { background:#080810; }
+    .sec-mid { background:#0a0a12; }
+    .sec-alt { background:#0d0d18; }
+
+    .eyebrow {
+      font-size:9px; letter-spacing:6px; color:#3a3430;
+      text-transform:uppercase; font-family:sans-serif; margin-bottom:20px;
+    }
+    .big-text { font-size:clamp(36px,5.5vw,62px); line-height:1.05; font-weight:400; }
+    .big-text em { font-style:italic; color:#b8a98a; }
+    .big-text strong { font-weight:700; }
+    .body-text {
+      font-size:14px; line-height:1.9; color:#3a3430;
+      font-family:sans-serif; margin-top:22px; max-width:460px;
+    }
+
+    /* ── INTRO LAYOUT ── */
+    .intro-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:80px; align-items:center;
+      max-width:880px; margin:0 auto;
+    }
+    .stats {
+      display:flex; flex-direction:column; gap:32px;
+      border-left:0.5px solid #1e1e2a; padding-left:52px;
+    }
+    .stat-num { font-size:48px; color:#b8a98a; line-height:1; }
+    .stat-label {
+      font-size:9px; letter-spacing:4px; color:#2a2a2e;
+      text-transform:uppercase; font-family:sans-serif; margin-top:4px;
+    }
+
+    /* ── QUOTE ── */
+    .quote-section { background:#0a0a12; text-align:center; padding:120px 80px; }
+    .big-quote {
+      font-size:clamp(26px,4vw,46px); line-height:1.3;
+      font-style:italic; max-width:700px; margin:0 auto 22px;
+    }
+    .big-quote strong { font-style:normal; font-weight:700; }
+    .quote-attr {
+      font-size:9px; letter-spacing:5px; color:#3a3430;
+      text-transform:uppercase; font-family:sans-serif;
+    }
+
+    /* ── PRODUCTS ── */
+    .products-header { text-align:center; margin-bottom:64px; }
+    .products-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:1px; background:#1e1e2a; max-width:880px; margin:0 auto;
+    }
+    .product-card {
+      background:#0a0a12; padding:48px 28px;
+      text-align:center; cursor:pointer;
+      transition:background .3s; position:relative; overflow:hidden;
+    }
+    .product-card:hover { background:#0f0f1c; }
+    .product-card::after {
+      content:''; position:absolute; inset:0;
+      border:0.5px solid #b8a98a;
+      opacity:0; transition:opacity .3s; pointer-events:none;
+    }
+    .product-card:hover::after { opacity:1; }
+    .product-badge {
+      font-size:8px; letter-spacing:4px; text-transform:uppercase;
+      background:#b8a98a; color:#080810; padding:5px 14px;
+      display:inline-block; margin-bottom:28px; font-family:sans-serif;
+    }
+    .mini-bottle { display:flex; justify-content:center; margin-bottom:24px; }
+    .product-name { font-size:26px; font-weight:400; margin-bottom:6px; }
+    .product-sub {
+      font-size:9px; letter-spacing:3px; color:#3a3430;
+      text-transform:uppercase; font-family:sans-serif; margin-bottom:20px;
+    }
+    .product-desc {
+      font-size:13px; color:#2e2e30; line-height:1.7;
+      font-family:sans-serif; margin-bottom:22px; min-height:60px;
+    }
+    .product-price { font-size:38px; color:#b8a98a; }
+    .product-unit {
+      font-size:9px; color:#2a2a2e; letter-spacing:3px;
+      text-transform:uppercase; font-family:sans-serif; margin-bottom:26px;
+    }
+    .add-btn {
+      width:100%; border:0.5px solid #2e2e3a; color:#e8e3d8;
+      padding:13px; font-size:9px; letter-spacing:4px;
+      text-transform:uppercase; cursor:pointer; background:transparent;
+      transition:all .3s; font-family:sans-serif;
+    }
+    .add-btn:hover { background:#b8a98a; border-color:#b8a98a; color:#080810; }
+
+    /* ── TOAST ── */
+    .toast {
+      background:#b8a98a; color:#080810; text-align:center;
+      padding:0; font-size:9px; letter-spacing:4px;
+      text-transform:uppercase; font-family:sans-serif;
+      max-height:0; overflow:hidden;
+      transition:max-height .3s, padding .3s;
+    }
+    .toast.show { padding:13px; max-height:50px; }
+
+    /* ── SCIENCE ── */
+    .science-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+      gap:44px; max-width:880px; margin:60px auto 0;
+    }
+    .science-item { border-top:0.5px solid #1e1e2a; padding-top:24px; }
+    .science-num {
+      font-size:10px; color:#222228; letter-spacing:3px;
+      font-family:sans-serif; margin-bottom:12px;
+    }
+    .science-title { font-size:20px; margin-bottom:10px; }
+    .science-body { font-size:13px; color:#2e2e30; line-height:1.7; font-family:sans-serif; }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:20px; max-width:880px; margin:60px auto 0;
+    }
+    .testi-card { border:0.5px solid #1a1a22; padding:30px; }
+    .testi-text {
+      font-size:14px; line-height:1.75; font-style:italic;
+      margin-bottom:16px; color:#c8c3b8;
+    }
+    .testi-name {
+      font-size:9px; letter-spacing:4px; color:#3a3430;
+      text-transform:uppercase; font-family:sans-serif;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background:#040408; padding:50px 80px;
+      display:flex; justify-content:space-between;
+      align-items:center; border-top:0.5px solid #1a1a22;
+      flex-wrap:wrap; gap:20px;
+    }
+    .footer-brand { font-size:22px; color:#1e1e28; }
+    .footer-tagline {
+      font-size:9px; letter-spacing:3px; color:#1a1a20;
+      text-transform:uppercase; font-family:sans-serif; margin-top:6px;
+    }
+    .footer-copy {
+      font-size:9px; letter-spacing:3px; color:#18181f;
+      text-transform:uppercase; font-family:sans-serif;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:700px){
+      nav { padding:16px 24px; }
+      .nav-links { gap:18px; }
+      .hero { grid-template-columns:1fr; padding:60px 28px; min-height:auto; }
+      .hero-right { display:none; }
+      section { padding:70px 28px; }
+      .quote-section { padding:80px 28px; }
+      .intro-grid { grid-template-columns:1fr; gap:40px; }
+      .stats { border-left:none; padding-left:0; border-top:0.5px solid #1e1e2a; padding-top:28px; }
+      footer { padding:40px 28px; flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-links">
+    <a class="nav-link" href="#philosophy">Origin</a>
+    <a class="nav-link" href="#collection">Collection</a>
+    <a class="nav-link" href="#science">Science</a>
+  </div>
+  <div class="nav-brand">AquaLuxe</div>
+  <div class="nav-links">
+    <a class="nav-link" href="#ritual">Ritual</a>
+    <span class="nav-cart" id="cart-count">Cart (0)</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="ring r1"></div>
+  <div class="ring r2"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Est. 2024 &nbsp;—&nbsp; Woodbridge, Ontario</div>
+    <h1 class="hero-title">Water,<br><em>beyond</em><br><strong>reason.</strong></h1>
+    <div class="hero-sub">The world's most unnecessarily premium water</div>
+    <a class="hero-cta" href="#collection">Discover the collection</a>
+  </div>
+  <div class="hero-right">
+    <div class="bottle-float" onclick="bounceBottle()" id="hero-bottle">
+      <svg width="200" height="480" viewBox="0 0 220 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0d1525"/>
+            <stop offset="20%" stop-color="#1a2a45"/>
+            <stop offset="40%" stop-color="#22375c"/>
+            <stop offset="58%" stop-color="#1e3254"/>
+            <stop offset="75%" stop-color="#16253f"/>
+            <stop offset="100%" stop-color="#0a1020"/>
+          </linearGradient>
+          <linearGradient id="sh1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+            <stop offset="45%" stop-color="#fff" stop-opacity="0.15"/>
+            <stop offset="60%" stop-color="#fff" stop-opacity="0.06"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="el1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#5b8fd4" stop-opacity=".4"/>
+            <stop offset="100%" stop-color="#5b8fd4" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="er1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#3a6bb0" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#3a6bb0" stop-opacity=".3"/>
+          </linearGradient>
+          <linearGradient id="ng1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0d1525"/>
+            <stop offset="35%" stop-color="#1a2f50"/>
+            <stop offset="58%" stop-color="#22375c"/>
+            <stop offset="100%" stop-color="#0a1020"/>
+          </linearGradient>
+          <linearGradient id="cg1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c8a96e"/>
+            <stop offset="45%" stop-color="#b8924a"/>
+            <stop offset="100%" stop-color="#8a6a2a"/>
+          </linearGradient>
+          <linearGradient id="cs1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+            <stop offset="48%" stop-color="#fff" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="wg1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a4a8a" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#0d2a5a" stop-opacity=".7"/>
+          </linearGradient>
+          <linearGradient id="lb1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#b8a98a" stop-opacity=".12"/>
+            <stop offset="50%" stop-color="#b8a98a" stop-opacity=".06"/>
+            <stop offset="100%" stop-color="#b8a98a" stop-opacity=".12"/>
+          </linearGradient>
+          <clipPath id="bc1">
+            <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z"/>
+          </clipPath>
+        </defs>
+        <ellipse cx="110" cy="490" rx="55" ry="7" fill="#050510" opacity=".4"/>
+        <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="url(#bg1)"/>
+        <rect x="60" y="300" width="100" height="155" fill="url(#wg1)" clip-path="url(#bc1)"/>
+        <path d="M60 300 Q80 295 110 297 Q140 295 160 300" fill="none" stroke="#2a5090" stroke-width=".5" opacity=".6"/>
+        <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="url(#sh1)"/>
+        <rect x="60" y="130" width="8" height="320" rx="4" fill="url(#el1)" opacity=".8"/>
+        <rect x="152" y="130" width="8" height="320" rx="4" fill="url(#er1)" opacity=".8"/>
+        <line x1="85" y1="135" x2="83" y2="445" stroke="#fff" stroke-width=".4" opacity=".06"/>
+        <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="none" stroke="#3a5a90" stroke-width=".8" opacity=".6"/>
+        <rect x="78" y="200" width="64" height="88" rx="1" fill="url(#lb1)" stroke="#b8a98a" stroke-width=".4" opacity=".8"/>
+        <text x="110" y="228" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#b8a98a" opacity=".9" font-style="italic">Altitude</text>
+        <text x="110" y="244" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#8a7a5a" letter-spacing="3" opacity=".8">AQUALUXE</text>
+        <line x1="88" y1="251" x2="132" y2="251" stroke="#b8a98a" stroke-width=".3" opacity=".5"/>
+        <text x="110" y="262" text-anchor="middle" font-family="sans-serif" font-size="5" fill="#6a5a3a" letter-spacing="2" opacity=".7">500ML · SPARKLING</text>
+        <text x="110" y="276" text-anchor="middle" font-family="sans-serif" font-size="5" fill="#4a3a2a" letter-spacing="1" opacity=".6">WOODBRIDGE · ONTARIO</text>
+        <ellipse cx="86" cy="355" rx="2.5" ry="2.5" fill="#5a8acd" opacity=".15"/>
+        <ellipse cx="128" cy="338" rx="2" ry="2" fill="#5a8acd" opacity=".12"/>
+        <ellipse cx="100" cy="372" rx="1.8" ry="1.8" fill="#5a8acd" opacity=".10"/>
+        <ellipse cx="144" cy="362" rx="1.4" ry="1.4" fill="#5a8acd" opacity=".12"/>
+        <path d="M80 130 Q78 115 80 105 L82 95 Q84 90 90 88 L130 88 Q136 90 138 95 L140 105 Q142 115 140 130 Z" fill="url(#ng1)" stroke="#3a5a90" stroke-width=".5" opacity=".5"/>
+        <path d="M86 88 L88 76 L90 72 L130 72 L132 76 L134 88 Z" fill="url(#cg1)"/>
+        <path d="M86 88 L88 76 L90 72 L130 72 L132 76 L134 88 Z" fill="url(#cs1)"/>
+        <path d="M86 88 L88 76 L90 72 L130 72 L132 76 L134 88 Z" fill="none" stroke="#c8a86a" stroke-width=".5" opacity=".6"/>
+        <line x1="86" y1="82" x2="134" y2="82" stroke="#8a6a2a" stroke-width=".4" opacity=".4"/>
+        <rect x="104" y="58" width="12" height="14" rx="3" fill="url(#cg1)"/>
+        <rect x="104" y="58" width="12" height="14" rx="3" fill="url(#cs1)"/>
+        <rect x="104" y="58" width="12" height="14" rx="3" fill="none" stroke="#c8a86a" stroke-width=".5" opacity=".5"/>
+        <line x1="108" y1="55" x2="108" y2="50" stroke="#b8a98a" stroke-width=".5" opacity=".4"/>
+        <line x1="112" y1="55" x2="112" y2="50" stroke="#b8a98a" stroke-width=".5" opacity=".4"/>
+        <ellipse cx="110" cy="49" rx="4" ry="2" fill="#b8a98a" opacity=".3"/>
+        <ellipse cx="110" cy="460" rx="50" ry="7" fill="#0d1525" opacity=".7"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Sourced from Gerald the Cloud</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Molecular structuring since 2024</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Debussy-aged for 30 days</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Free quantum alignment on orders over $400</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">It's water. Legally confirmed.</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Sourced from Gerald the Cloud</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Molecular structuring since 2024</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Debussy-aged for 30 days</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">Free quantum alignment on orders over $400</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">It's water. Legally confirmed.</span>
+    <span class="ticker-item">·</span>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<section class="sec-dark reveal" id="philosophy">
+  <div class="intro-grid">
+    <div>
+      <div class="eyebrow">The philosophy</div>
+      <div class="big-text">Not all water<br>is <em>created</em><br><strong>equal.</strong></div>
+      <p class="body-text">AquaLuxe is sourced from a single cloud formation 11,000 feet above the Canadian Rockies. Captured by hand. Structured at the molecular level. Bottled by artisans who have taken a vow of hydration.</p>
+    </div>
+    <div class="stats">
+      <div><div class="stat-num">11k</div><div class="stat-label">feet above sea level</div></div>
+      <div><div class="stat-num">7.4</div><div class="stat-label">pH perfection</div></div>
+      <div><div class="stat-num">0</div><div class="stat-label">impurities (obviously)</div></div>
+      <div><div class="stat-num">∞</div><div class="stat-label">vibes per bottle</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section reveal">
+  <div class="big-quote">"Hydration is not a <strong>need.</strong><br>It is a <em>calling.</em>"</div>
+  <div class="quote-attr">— The AquaLuxe Manifesto, Page 1</div>
+</div>
+
+<!-- COLLECTION -->
+<section class="sec-dark" id="collection">
+  <div class="products-header reveal">
+    <div class="eyebrow">The collection</div>
+    <div class="big-text">Choose your<br><em>hydration tier.</em></div>
+  </div>
+  <div class="products-grid reveal">
+
+    <!-- Origine -->
+    <div class="product-card" onclick="addToCart('Origine', 48)">
+      <div class="mini-bottle">
+        <svg width="64" height="152" viewBox="0 0 220 520" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0d1525"/><stop offset="40%" stop-color="#1a3040"/><stop offset="100%" stop-color="#0a1020"/></linearGradient>
+            <linearGradient id="pw1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a5a3a" stop-opacity=".5"/><stop offset="100%" stop-color="#0d3a22" stop-opacity=".7"/></linearGradient>
+            <linearGradient id="pc1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c0c0c0"/><stop offset="100%" stop-color="#888"/></linearGradient>
+            <clipPath id="pbc1"><path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z"/></clipPath>
+          </defs>
+          <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="url(#pb1)"/>
+          <rect x="60" y="340" width="100" height="115" fill="url(#pw1)" clip-path="url(#pbc1)"/>
+          <path d="M60 340 Q110 335 160 340" fill="none" stroke="#1a6a3a" stroke-width=".5" opacity=".6"/>
+          <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="none" stroke="#2a4a60" stroke-width=".8" opacity=".5"/>
+          <text x="110" y="240" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#8aaa7a" opacity=".8" font-style="italic">Still</text>
+          <path d="M80 130 Q78 105 90 88 L130 88 Q142 105 140 130 Z" fill="url(#pb1)" stroke="#2a4a60" stroke-width=".4" opacity=".5"/>
+          <path d="M88 88 L90 72 L130 72 L132 88 Z" fill="url(#pc1)" opacity=".7"/>
+          <ellipse cx="110" cy="460" rx="50" ry="7" fill="#0d1525" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="product-name">Origine</div>
+      <div class="product-sub">Still · 500ml · Hand-filled</div>
+      <div class="product-desc">Our entry-level transcendence. Still water from the lower reaches of Gerald. Approachable, yet quietly judgmental.</div>
+      <div class="product-price">$48</div>
+      <div class="product-unit">per bottle</div>
+      <button class="add-btn">Add to ritual</button>
+    </div>
+
+    <!-- Altitude -->
+    <div class="product-card" onclick="addToCart('Altitude', 120)">
+      <div class="product-badge">Most transcendent</div>
+      <div class="mini-bottle">
+        <svg width="64" height="152" viewBox="0 0 220 520" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pb2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0d1525"/><stop offset="40%" stop-color="#22375c"/><stop offset="100%" stop-color="#0a1020"/></linearGradient>
+            <linearGradient id="pw2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a4a8a" stop-opacity=".5"/><stop offset="100%" stop-color="#0d2a5a" stop-opacity=".7"/></linearGradient>
+            <linearGradient id="pc2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8a96e"/><stop offset="100%" stop-color="#8a6a2a"/></linearGradient>
+            <clipPath id="pbc2"><path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z"/></clipPath>
+          </defs>
+          <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="url(#pb2)"/>
+          <rect x="60" y="300" width="100" height="155" fill="url(#pw2)" clip-path="url(#pbc2)"/>
+          <ellipse cx="86" cy="340" rx="2.5" ry="2.5" fill="#5a8acd" opacity=".2"/>
+          <ellipse cx="130" cy="325" rx="2" ry="2" fill="#5a8acd" opacity=".15"/>
+          <ellipse cx="105" cy="360" rx="1.8" ry="1.8" fill="#5a8acd" opacity=".15"/>
+          <path d="M60 300 Q110 295 160 300" fill="none" stroke="#2a5090" stroke-width=".5" opacity=".6"/>
+          <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="none" stroke="#3a5a90" stroke-width=".8" opacity=".6"/>
+          <text x="110" y="240" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#b8a98a" opacity=".9" font-style="italic">Altitude</text>
+          <path d="M80 130 Q78 105 90 88 L130 88 Q142 105 140 130 Z" fill="url(#pb2)" stroke="#3a5a90" stroke-width=".4" opacity=".5"/>
+          <path d="M88 88 L90 72 L130 72 L132 88 Z" fill="url(#pc2)" opacity=".9"/>
+          <ellipse cx="110" cy="460" rx="50" ry="7" fill="#0d1525" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="product-name">Altitude</div>
+      <div class="product-sub">Sparkling · 500ml · Blessed</div>
+      <div class="product-desc">From Gerald's peak. The bubbles are naturally occurring and spiritually intentional. The gold cap is non-negotiable.</div>
+      <div class="product-price">$120</div>
+      <div class="product-unit">per bottle</div>
+      <button class="add-btn">Add to ritual</button>
+    </div>
+
+    <!-- Nirvana -->
+    <div class="product-card" onclick="addToCart('Nirvāna Reserve', 480)">
+      <div class="mini-bottle">
+        <svg width="64" height="152" viewBox="0 0 220 520" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pb3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a0d25"/><stop offset="40%" stop-color="#3a2258"/><stop offset="100%" stop-color="#100820"/></linearGradient>
+            <linearGradient id="pw3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a1a8a" stop-opacity=".5"/><stop offset="100%" stop-color="#2a0d5a" stop-opacity=".7"/></linearGradient>
+            <linearGradient id="pc3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8d4a0"/><stop offset="100%" stop-color="#b8922a"/></linearGradient>
+            <clipPath id="pbc3"><path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z"/></clipPath>
+          </defs>
+          <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="url(#pb3)"/>
+          <rect x="60" y="260" width="100" height="195" fill="url(#pw3)" clip-path="url(#pbc3)"/>
+          <path d="M60 260 Q110 255 160 260" fill="none" stroke="#6a2aaa" stroke-width=".5" opacity=".6"/>
+          <path d="M72 130 Q68 160 65 200 L60 420 Q60 445 80 450 L140 450 Q160 445 160 420 L155 200 Q152 160 148 130 Z" fill="none" stroke="#6a4aaa" stroke-width=".8" opacity=".5"/>
+          <text x="110" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#d4b8e0" opacity=".9" font-style="italic">Nirvāna</text>
+          <path d="M80 130 Q78 105 90 88 L130 88 Q142 105 140 130 Z" fill="url(#pb3)" stroke="#6a4aaa" stroke-width=".4" opacity=".5"/>
+          <path d="M88 88 L90 72 L130 72 L132 88 Z" fill="url(#pc3)" opacity=".9"/>
+          <ellipse cx="110" cy="460" rx="50" ry="7" fill="#1a0d25" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="product-name">Nirvāna</div>
+      <div class="product-sub">Reserve · 500ml · 12 remaining</div>
+      <div class="product-desc">Aged 30 days to Debussy's Clair de Lune. Ships with a certificate and a handwritten apology for the price.</div>
+      <div class="product-price">$480</div>
+      <div class="product-unit">per bottle · limited</div>
+      <button class="add-btn">Add to ritual</button>
+    </div>
+
+  </div>
+  <div class="toast" id="toast"></div>
+</section>
+
+<!-- SCIENCE -->
+<section class="sec-mid reveal" id="science">
+  <div class="eyebrow">The science</div>
+  <div class="big-text">What makes us<br><em>different.</em></div>
+  <div class="science-grid">
+    <div class="science-item">
+      <div class="science-num">01</div>
+      <div class="science-title">Molecular structuring</div>
+      <div class="science-body">Each water molecule is hand-inspected by our team of retired physicists who have nothing better to do.</div>
+    </div>
+    <div class="science-item">
+      <div class="science-num">02</div>
+      <div class="science-title">Cloud-source origin</div>
+      <div class="science-body">Harvested from Gerald — a specific cloud we've named and grown emotionally attached to over two years.</div>
+    </div>
+    <div class="science-item">
+      <div class="science-num">03</div>
+      <div class="science-title">Acoustic ageing</div>
+      <div class="science-body">30 days of Debussy. Does nothing scientifically. Feels extremely correct.</div>
+    </div>
+    <div class="science-item">
+      <div class="science-num">04</div>
+      <div class="science-title">Certificate of hydration</div>
+      <div class="science-body">Each bottle ships with a legally binding document confirming this is, in fact, water.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec-dark reveal">
+  <div style="text-align:center; margin-bottom:60px;">
+    <div class="eyebrow">What our devotees say</div>
+    <div class="big-text">Real people,<br><em>real hydration.</em></div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="testi-text">"I used to drink tap water. I didn't know I was suffering."</div><div class="testi-name">Sebastian V. — Monaco</div></div>
+    <div class="testi-card"><div class="testi-text">"My therapist says it's probably not the water. She's now fired."</div><div class="testi-name">Camille D. — Paris</div></div>
+    <div class="testi-card"><div class="testi-text">"At $480 a bottle I cried on the first sip. The water understood."</div><div class="testi-name">Raj P. — Dubai</div></div>
+    <div class="testi-card"><div class="testi-text">"Bought this as a joke. Cancelled my gym membership to afford more."</div><div class="testi-name">Anonymous — Toronto</div></div>
+  </div>
+</section>
+
+<!-- RITUAL QUOTE -->
+<div class="quote-section reveal" id="ritual">
+  <div class="big-quote">"Pour at <strong>23 degrees.</strong><br>Contemplate for <em>4 minutes.</em><br>Do not gulp."</div>
+  <div class="quote-attr">— The AquaLuxe Drinking Ritual, Article III</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">AquaLuxe</div>
+    <div class="footer-tagline">Est. 2024 · Woodbridge, Ontario</div>
+  </div>
+  <div class="footer-copy">It's water. &copy; AquaLuxe 2024</div>
+</footer>
+
+<script>
+  let cartCount = 0;
+
+  function addToCart(name, price) {
+    cartCount++;
+    document.getElementById('cart-count').textContent = 'Cart (' + cartCount + ')';
+    const toast = document.getElementById('toast');
+    toast.textContent = name + ' — $' + price + ' added to your ritual';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  function bounceBottle() {
+    const b = document.getElementById('hero-bottle');
+    b.style.transform = 'scale(1.08)';
+    setTimeout(() => b.style.transform = '', 200);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
